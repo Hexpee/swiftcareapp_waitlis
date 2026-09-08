@@ -1,0 +1,2 @@
+export default function Brand(){return <span className="brand"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#2563EB"/><path d="M24 12v24M12 24h24" stroke="white" strokeWidth="5" strokeLinecap="round"/></svg><span className="brand-swift">Swift<span className="brand-care">Careapp</span></span></span>;}
+export function NigeriaFlag(){return <svg width="21" height="14" viewBox="0 0 30 20" role="img" aria-label="Nigerian flag"><path fill="#008753" d="M0 0h30v20H0z"/><path fill="#fff" d="M10 0h10v20H10z"/></svg>;}

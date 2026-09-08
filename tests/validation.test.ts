@@ -1,0 +1,11 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {waitlistSchema} from '../lib/validation.ts';
+import {createToken,validToken} from '../lib/token.ts';
+const valid={fullName:' Ada Okafor ',email:' ADA@EXAMPLE.COM ',phone:'',interest:'Patient',location:'',consent:true,website:'',token:'test'};
+test('normalizes email and name',()=>{const data=waitlistSchema.parse(valid);assert.equal(data.email,'ada@example.com');assert.equal(data.fullName,'Ada Okafor');});
+test('requires explicit consent',()=>{assert.equal(waitlistSchema.safeParse({...valid,consent:false}).success,false);});
+test('rejects malformed email and bot field',()=>{assert.equal(waitlistSchema.safeParse({...valid,email:'wrong'}).success,false);assert.equal(waitlistSchema.safeParse({...valid,website:'bot'}).success,false);});
+test('accepts all three audiences and optional fields',()=>{for(const interest of ['Patient','Doctor','Pharmacy Partner'])assert.ok(waitlistSchema.safeParse({...valid,interest}).success);});
+test('rejects huge fields and invalid interest',()=>{assert.equal(waitlistSchema.safeParse({...valid,fullName:'a'.repeat(101)}).success,false);assert.equal(waitlistSchema.safeParse({...valid,interest:'Admin'}).success,false);});
+test('signed token rejects tampering, premature and expired submission',()=>{process.env.WAITLIST_SECRET='test-only-012345678901234567890123456789';const original=Date.now;const t=Date.now();try{Date.now=()=>t;const token=createToken();assert.equal(validToken(token),false);Date.now=()=>t+2000;assert.equal(validToken(token),true);assert.equal(validToken(token.slice(0,-1)+(token.endsWith('0')?'1':'0')),false);Date.now=()=>t+7200001;assert.equal(validToken(token),false);}finally{Date.now=original;}});
