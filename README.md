@@ -116,18 +116,6 @@ The application has been verified for:
 
 **Note**: Full dependency installation, complete build/typecheck suite, and PostgreSQL integration tests require proper network access and a live database instance. See `VERIFICATION.md` for details.
 
-## 📝 Before Going Live
-
-Before collecting live submissions:
-
-1. Follow the setup instructions in `HOSTINGER-SETUP.md`
-2. Install all dependencies: `npm install`
-3. Run the full build: `npm run build`
-4. Type check your code: `npm run typecheck`
-5. Execute the complete test suite: `npm run test`
-6. Complete live acceptance checks in your target environment
-7. Configure database credentials and email settings
-8. Deploy to your hosting provider
 
 ## 🗄️ Database
 
