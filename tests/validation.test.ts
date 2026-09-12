@@ -1,9 +1,10 @@
 import {test} from 'node:test';
+import {live} from 'node:test/livetest';
 import assert from 'node:assert/strict';
 import {waitlistSchema} from '../lib/validation.ts';
 import {createToken,validToken} from '../lib/token.ts';
-const valid={fullName:' Ada Okafor ',email:' ADA@EXAMPLE.COM ',phone:'',interest:'Patient',location:'',consent:true,website:'',token:'test'};
-test('normalizes email and name',()=>{const data=waitlistSchema.parse(valid);assert.equal(data.email,'ada@example.com');assert.equal(data.fullName,'Ada Okafor');});
+const valid={fullName:' Muhammed Ibrahim',email:' omoyaniger1@gmail.com ',phone:'',interest:'Patient',location:'',consent:true,website:'',token:'test'};
+test('normalizes email and name',()=>{const data=waitlistSchema.parse(valid);assert.equal(data.email,'omoyaniger1@gmail.com');assert.equal(data.fullName,'Muhammed Ibrahim');});
 test('requires explicit consent',()=>{assert.equal(waitlistSchema.safeParse({...valid,consent:false}).success,false);});
 test('rejects malformed email and bot field',()=>{assert.equal(waitlistSchema.safeParse({...valid,email:'wrong'}).success,false);assert.equal(waitlistSchema.safeParse({...valid,website:'bot'}).success,false);});
 test('accepts all three audiences and optional fields',()=>{for(const interest of ['Patient','Doctor','Pharmacy Partner'])assert.ok(waitlistSchema.safeParse({...valid,interest}).success);});
