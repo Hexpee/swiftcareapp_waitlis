@@ -1,5 +1,4 @@
-// Run against a separate test database and a running production server only.
-// DATABASE_URL=<test-db> TEST_BASE_URL=http://localhost:3000 node tests/integration.mjs
+// DATABASE
 import assert from 'node:assert/strict';
 import pg from 'pg';
 const base=process.env.TEST_BASE_URL;
@@ -19,3 +18,4 @@ try{
  assert.equal((await send(data)).status,429);
  console.log('PASS: origin, consent, spam, persistence, concurrent deduplication, consent audit and rate limiting');
 }finally{await client.query('DELETE FROM waitlist_entries WHERE email=$1',[email]);await client.end();}
+//Query ends
